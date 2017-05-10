@@ -22,6 +22,7 @@
 </template>
 <script>
     export default{
+        //父组件穿过的数据
         props: {
             slides: {
                 type: Array,
@@ -34,7 +35,8 @@
         },
         data () {
             return {
-                nowIndex: 0
+                nowIndex: 0,
+                isShow: true
             }
         },
         computed: {
