@@ -5,11 +5,11 @@
         <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li>登录</li>
+            <li @click="logClick">登录</li>
             <li class="nav-pile">|</li>
-            <li>注册</li>
+            <li @click="regClick">注册</li>
             <li class="nav-pile">|</li>
-            <li>关于</li>
+            <li @click="aboutClick">关于</li>
           </ul>
         </div>
       </div>
@@ -22,12 +22,50 @@
     <div class="app-foot">
       <p>© 2016 fishenal MIT</p>
     </div>
+    <!--关于-->
+    <my-dialog :is-show="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+      <p>about</p>
+    </my-dialog>
+    <!--登录-->
+    <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
+      <p>log</p>
+    </my-dialog>
+    <!--注册-->
+    <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
+      <p>reg</p>
+    </my-dialog>
   </div>
 </template>
 
 <script>
+  import Dialog from './dialog'
   export default {
+    components: {
+      myDialog: Dialog
+    },
+    data () {
+      return {
+        isShowAboutDialog: false,
+        isShowLogDialog: false,
+        isShowRegDialog: false
+      }
+    },
+    methods: {
+      aboutClick () {
+        this.isShowAboutDialog = true
+      },
+      logClick () {
+        this.isShowLogDialog = true
+      },
+      regClick () {
+        this.isShowRegDialog = true
+      },
+      /*?? attr*/
+      closeDialog (attr) {
+        this[attr] = false
+      }
 
+    }
   }
 </script>
 
