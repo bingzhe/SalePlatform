@@ -17,10 +17,10 @@
             </div>
             <div class="g-form-line">
                 <div class="g-form-btn">
-                    <a class="button">登录</a>
+                    <a class="button" @click="onLogin">登录</a>
                 </div>
             </div>
-            <p></p>
+            <p>{{ errorText }}</p>
         </div>
     </div>
 </template>
@@ -30,7 +30,8 @@
         data () {
             return {
                 usernameModel: '',
-                passwordModel: ''
+                passwordModel: '',
+                errorText: ''
             }
         },
         computed: {
@@ -45,6 +46,11 @@
                 else {
                     status = true
                     errorText = ''
+                }
+                //第一次进入不用显示提示错误信息
+                if (!this.userFlag) {
+                    errorText = ''
+                    this.userFlag = true
                 }
                 //返回信息
                 return {
@@ -62,9 +68,29 @@
                     status = true
                     errorText = ''
                 } 
+                if (!this.passwordFlag) {
+                    errorText = ''
+                    this.passwordFlag = true
+                }
                 return {
                     status,
                     errorText
+                }
+            }
+        },
+        methods: {
+            onLogin () {
+                if (!this.userErrors.status || !this.passwordErrors.status) {
+                    this.errorText = "部分选项未通过"
+                }
+                else {
+                    this.errorText = ''
+                    this.$http.get('api/login')
+                    .then((res) => {
+                        this.$emit('has-log', res.data)
+                    }, (error) => {
+                        console.log(error)
+                    })
                 }
             }
         }
