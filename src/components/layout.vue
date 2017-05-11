@@ -28,7 +28,7 @@
     </my-dialog>
     <!--登录-->
     <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
-      <p>log</p>
+      <log-form></log-form>
     </my-dialog>
     <!--注册-->
     <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
@@ -39,9 +39,11 @@
 
 <script>
   import Dialog from './dialog'
+  import LogForm from './logForm'
   export default {
     components: {
-      myDialog: Dialog
+      myDialog: Dialog,
+      LogForm
     },
     data () {
       return {
