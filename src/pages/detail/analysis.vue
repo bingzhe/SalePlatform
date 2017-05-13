@@ -18,7 +18,7 @@
                     产品类型：
                 </div>
                 <div class="sales-board-line-right">
-                
+                    <v-selection></v-selection>
                 </div>
             </div>
             <div class="sales-board-line">
@@ -61,9 +61,11 @@
 
 <script>
 import VCounter from '../../components/base/counter'
+import VSelection from '../../components/base/selection'
 export default {
     components: {
-        VCounter
+        VCounter,
+        VSelection
     },
     data () {
         return {
