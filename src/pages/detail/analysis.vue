@@ -68,7 +68,7 @@ export default {
     data () {
         return {
             numMax: 20,
-            buyNum: 0
+            buyNum: 0 //购买数量
         }
     },
     methods: {
