@@ -196,6 +196,7 @@
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 4px;
   }
   .button:hover {
     background: #4fc08d;

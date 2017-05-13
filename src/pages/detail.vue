@@ -54,24 +54,24 @@ export default {
 }
 </script>
 
-<style scoped>
-    .detail-wrap {
-        width: 1200px;
-        margin: 0 auto;
-        overflow: hidden;
-        padding-top: 20px;
-    }
-    .detail-left {
-        float: left;
-        width: 200px;
-        text-align: center;
-    }
-    .detail-right {
-        float: left;
-        width: 980px;
-        margin-left: 20px;
-    }
-    .product-board {
+<style>
+.detail-wrap {
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-top: 20px;
+}
+.detail-left {
+    float: left;
+    width: 200px;
+    text-align: center;
+}
+.detail-right {
+    float: left;
+    width: 980px;
+    margin-left: 20px;
+}
+.product-board {
   background: #fff;
   padding: 20px 0;
 }
