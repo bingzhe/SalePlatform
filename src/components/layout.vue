@@ -35,7 +35,7 @@
     </my-dialog>
     <!--注册-->
     <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
-      <p>reg</p>
+      <reg-form></reg-form>
     </my-dialog>
   </div>
 </template>
@@ -43,10 +43,12 @@
 <script>
   import Dialog from './dialog'
   import LogForm from './logForm'
+  import RegForm from './regForm'
   export default {
     components: {
       myDialog: Dialog,
-      LogForm
+      LogForm,
+      RegForm
     },
     data () {
       return {
