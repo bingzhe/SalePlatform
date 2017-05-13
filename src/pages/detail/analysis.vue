@@ -18,7 +18,7 @@
                     产品类型：
                 </div>
                 <div class="sales-board-line-right">
-                    <v-selection></v-selection>
+                    <v-selection :selections="buyTypes" @On-change="onParamChange('buyType', $event)"></v-selection>
                 </div>
             </div>
             <div class="sales-board-line">
@@ -26,7 +26,7 @@
                     有效时间：
                 </div>
                 <div class="sales-board-line-left">
-                
+    
                 </div>
             </div>
             <div class="sales-board-line">
@@ -34,7 +34,7 @@
                     产品版本：
                 </div>
                 <div class="sales-board-line-left">
-                
+    
                 </div>
             </div>
             <div class="sales-board-line">
@@ -42,7 +42,7 @@
                     总价：
                 </div>
                 <div class="sales-board-line-left">
-                
+    
                 </div>
             </div>
             <div class="sales-board-line">
@@ -67,15 +67,29 @@ export default {
         VCounter,
         VSelection
     },
-    data () {
+    data() {
         return {
             numMax: 20,
-            buyNum: 0 //购买数量
+            buyNum: 0, //购买数量
+            buyTypes: [
+                {
+                    label: '入门版',
+                    value: 0
+                },
+                {
+                    label: '中级版',
+                    value: 1
+                },
+                {
+                    label: '高级版',
+                    value: 2
+                }
+            ]
         }
     },
     methods: {
-        onParamChange (attr, val) {
-            
+        onParamChange(attr, val) {
+            console.log(val.value)
         }
     }
 }
@@ -83,26 +97,30 @@ export default {
 
 <style scoped>
 .buy-dialog-title {
-  font-size: 16px;
-  font-weight: bold;
+    font-size: 16px;
+    font-weight: bold;
 }
+
 .buy-dialog-btn {
-  margin-top: 20px;
+    margin-top: 20px;
 }
+
 .buy-dialog-table {
-  width: 100%;
-  margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
 }
+
 .buy-dialog-table td,
-.buy-dialog-table th{
-  border: 1px solid #e3e3e3;
-  text-align: center;
-  padding: 5px 0;
-}
 .buy-dialog-table th {
-  background: #4fc08d;
-  color: #fff;
-  border: 1px solid #4fc08d;
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.buy-dialog-table th {
+    background: #4fc08d;
+    color: #fff;
+    border: 1px solid #4fc08d;
 }
 </style>
 
