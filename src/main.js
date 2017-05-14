@@ -22,7 +22,7 @@ let router = new VueRouter({
         {
             path: '/detail',
             component: DetailPage,
-            //redirect: '/detail/analysis',
+            redirect: '/detail/analysis', // '/detail'会直接跳到'/detail/analysis'
             children: [{
                     path: 'analysis',
                     component: DetailAnaPage
