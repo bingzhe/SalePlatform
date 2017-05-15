@@ -34,7 +34,7 @@
                     产品版本：
                 </div>
                 <div class="sales-board-line-right">
-                    <v-mul-chooser :selections="versionList"></v-mul-chooser>
+                    <v-mul-chooser :selections="versionList" @on-change="onParamChange('versions', $event)"></v-mul-chooser>
                 </div>
             </div>
             <div class="sales-board-line">

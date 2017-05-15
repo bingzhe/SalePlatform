@@ -35,13 +35,11 @@ export default {
                 this.nowIndex.splice(shiftIndex, 1)
             }
             this.nowIndex.forEach((element, index, array) => {
-                nowObjArray.push(this.selections[index])
+                nowObjArray.push(this.selections[element])
             })
-            // let nowObjArray = _.map(this.nowIndex, (idx) => {
+            //  nowObjArray = _.map(this.nowIndex, (idx) => {
             //     return this.selections[idx]
             // })
-
-            //console.log(nowObjArray)
             this.$emit('on-change', nowObjArray)
         },
         checkActive(index) {
