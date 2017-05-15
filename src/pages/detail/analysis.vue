@@ -18,38 +18,38 @@
                     产品类型：
                 </div>
                 <div class="sales-board-line-right">
-                    <v-selection :selections="buyTypes" @On-change="onParamChange('buyType', $event)"></v-selection>
+                    <v-selection :selections="buyTypes" @on-change="onParamChange('buyType', $event)"></v-selection>
                 </div>
             </div>
             <div class="sales-board-line">
-                <div class="sales-board-line-right">
+                <div class="sales-board-line-left">
                     有效时间：
                 </div>
-                <div class="sales-board-line-left">
-    
+                <div class="sales-board-line-right">
+                    <v-chooser :selections="periodList" @on-change="onParamChange('period', $event)"></v-chooser>
                 </div>
             </div>
             <div class="sales-board-line">
-                <div class="sales-board-line-right">
+                <div class="sales-board-line-left">
                     产品版本：
                 </div>
-                <div class="sales-board-line-left">
-    
+                <div class="sales-board-line-right">
+                    <v-mul-chooser :selections="versionList"></v-mul-chooser>
                 </div>
             </div>
             <div class="sales-board-line">
-                <div class="sales-board-line-right">
+                <div class="sales-board-line-left">
                     总价：
                 </div>
-                <div class="sales-board-line-left">
+                <div class="sales-board-line-right">
     
                 </div>
             </div>
             <div class="sales-board-line">
-                <div class="sales-board-line-right">
+                <div class="sales-board-line-left">
                     &nbsp;
                 </div>
-                <div class="sales-board-line-left">
+                <div class="sales-board-line-right">
                     <div class="button">
                         立即购买
                     </div>
@@ -62,10 +62,14 @@
 <script>
 import VCounter from '../../components/base/counter'
 import VSelection from '../../components/base/selection'
+import VChooser from '../../components/base/chooser'
+import VMulChooser from '../../components/base/multiplyChooser'
 export default {
     components: {
         VCounter,
-        VSelection
+        VSelection,
+        VChooser,
+        VMulChooser
     },
     data() {
         return {
@@ -84,12 +88,40 @@ export default {
                     label: '高级版',
                     value: 2
                 }
+            ],
+            periodList: [
+                {
+                    label: '半年',
+                    value: 0
+                },
+                {
+                    label: '一年',
+                    value: 1
+                },
+                {
+                    label: '三年',
+                    value: 2
+                }
+            ],
+            versionList: [
+                {
+                    label: '客户版',
+                    value: 0
+                },
+                {
+                    label: '代理商版',
+                    value: 1
+                },
+                {
+                    label: '专家版',
+                    value: 2
+                }
             ]
         }
     },
     methods: {
         onParamChange(attr, val) {
-            console.log(val.value)
+            console.log(val)
         }
     }
 }
