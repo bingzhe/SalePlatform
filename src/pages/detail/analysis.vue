@@ -42,7 +42,7 @@
                     总价：
                 </div>
                 <div class="sales-board-line-right">
-    
+                {{ price }}
                 </div>
             </div>
             <div class="sales-board-line">
@@ -113,6 +113,7 @@ import VChooser from '../../components/base/chooser'
 import VMulChooser from '../../components/base/multiplyChooser'
 import Dialog from '../../components/dialog'
 import BankChooser from '../../components/bankChooser'
+import _ from 'lodash'
 export default {
     components: {
         VCounter,
@@ -126,6 +127,7 @@ export default {
         return {
             numMax: 20,
             buyNum: 0, //购买数量
+            price: 0,
             buyType: {
                 label: '入门版',
                 value: 0
@@ -187,6 +189,23 @@ export default {
     methods: {
         onParamChange(attr, val) {
             this[attr] = val
+            this.getPrice()
+        },
+        getPrice() { 
+            let buyVersionsArray = _.map(this.versions, (item) => {
+                return item.value
+            })
+            let reqParams = {
+                buyNumber: this.buyNum,
+                buyType: this.buyType.value,
+                period: this.period.value,
+                version: buyVersionsArray.join(',')
+            }
+            this.$http.post('/api/getPrice', reqParams)
+            .then((res) => {
+                console.log(res.data)
+                //this.price = res.data.amount
+            })
         },
         showPayDialog() {
             this.isShowPayDialog = true
