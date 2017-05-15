@@ -42,7 +42,7 @@
                     总价：
                 </div>
                 <div class="sales-board-line-right">
-                {{ price }}
+                    {{ price }}
                 </div>
             </div>
             <div class="sales-board-line">
@@ -128,18 +128,21 @@ export default {
             numMax: 20,
             buyNum: 0, //购买数量
             price: 0,
-            buyType: {
-                label: '入门版',
-                value: 0
-            },  //默认产品类型
-            period: {
-                label: '半年',
-                value: 0
-            },  //默认有效时间
-            versions: [{
-                label: '客户版',
-                value: 0
-            }],  //默认版本
+            buyType: {},
+            period: {},
+            versions: [],
+            // buyType: {
+            //     label: '入门版',
+            //     value: 0
+            // },  //默认产品类型
+            // period: {
+            //     label: '半年',
+            //     value: 0
+            // },  //默认有效时间
+            // versions: [{
+            //     label: '客户版',
+            //     value: 0
+            // }],  //默认版本
             isShowPayDialog: false,
             backId: null,
             buyTypes: [
@@ -191,7 +194,7 @@ export default {
             this[attr] = val
             this.getPrice()
         },
-        getPrice() { 
+        getPrice() {
             let buyVersionsArray = _.map(this.versions, (item) => {
                 return item.value
             })
@@ -202,10 +205,10 @@ export default {
                 version: buyVersionsArray.join(',')
             }
             this.$http.post('/api/getPrice', reqParams)
-            .then((res) => {
-                console.log(res.data)
-                //this.price = res.data.amount
-            })
+                .then((res) => {
+                    console.log(res.data)
+                    //this.price = res.data.amount
+                })
         },
         showPayDialog() {
             this.isShowPayDialog = true
@@ -219,6 +222,13 @@ export default {
         confirmBuy() {
 
         }
+    },
+    mounted() {
+        this.buyNum = 1
+        this.buyType = this.buyTypes[0]
+        this.versions = [this.versionList[0]]
+        this.period = this.periodList[0]
+        this.getPrice()
     }
 }
 </script>
