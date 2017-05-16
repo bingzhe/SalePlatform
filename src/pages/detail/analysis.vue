@@ -95,7 +95,7 @@
                     <td>
                         <span v-for="item in versions">{{ item.label }}</span>
                     </td>
-                    <td>{{ }}</td>
+                    <td>{{ price }}</td>
                 </tr>
             </table>
             <h3 class="buy-dialog-title">请选择银行</h3>
@@ -103,6 +103,12 @@
             <div class="button buy-dialog-btn" @click="confirmBuy">确认购买</div>
         </my-dialog>
         <!--支付弹窗 End-->
+        <!--支付失败弹窗 Start-->
+        <my-dialog :is-show="isShowErrDialog" @on-close="hideErrDialog">
+            支付失败
+        </my-dialog>
+        <!--支付成功弹窗 End-->
+        <check-order :is-show-check-dialog="isShowCheckOrder"></check-order>
     </div>
 </template>
 
@@ -113,6 +119,7 @@ import VChooser from '../../components/base/chooser'
 import VMulChooser from '../../components/base/multiplyChooser'
 import Dialog from '../../components/dialog'
 import BankChooser from '../../components/bankChooser'
+import CheckOrder from '../../components/checkOrder'
 import _ from 'lodash'
 export default {
     components: {
@@ -121,7 +128,8 @@ export default {
         VChooser,
         VMulChooser,
         MyDialog: Dialog,
-        BankChooser
+        BankChooser,
+        CheckOrder
     },
     data() {
         return {
@@ -144,6 +152,8 @@ export default {
             //     value: 0
             // }],  //默认版本
             isShowPayDialog: false,
+            isShowErrDialog: false,
+            isShowCheckOrder: false,
             backId: null,
             buyTypes: [
                 {
@@ -210,17 +220,28 @@ export default {
                     //this.price = res.data.amount
                 })
         },
+        // 支付弹窗展示
         showPayDialog() {
             this.isShowPayDialog = true
         },
+        // 支付弹窗隐藏
         hidePayDialog() {
             this.isShowPayDialog = false
+        },
+        // 支付错误弹窗展示
+        showErrDialog() {
+            this.isShowErrDialog = true
+        },
+        // 支付错误弹窗隐藏
+        hideErrDialog() {
+            this.isShowErrDialog = false
         },
         onChangeBanks(bankObj) {
             this.bankId = bankObj.id
         },
         confirmBuy() {
-
+            this.isShowPayDialog = false
+            this.isShowCheckOrder = true
         }
     },
     mounted() {
