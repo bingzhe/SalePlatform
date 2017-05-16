@@ -139,22 +139,10 @@ export default {
             buyType: {},
             period: {},
             versions: [],
-            // buyType: {
-            //     label: '入门版',
-            //     value: 0
-            // },  //默认产品类型
-            // period: {
-            //     label: '半年',
-            //     value: 0
-            // },  //默认有效时间
-            // versions: [{
-            //     label: '客户版',
-            //     value: 0
-            // }],  //默认版本
             isShowPayDialog: false,
             isShowErrDialog: false,
             isShowCheckOrder: false,
-            backId: null,
+            bankId: null,
             buyTypes: [
                 {
                     label: '入门版',
@@ -214,10 +202,9 @@ export default {
                 period: this.period.value,
                 version: buyVersionsArray.join(',')
             }
-            this.$http.post('/api/getPrice', reqParams)
+            this.$http.get('/api/getPrice', reqParams)
                 .then((res) => {
-                    console.log(res.data)
-                    //this.price = res.data.amount
+                    this.price = res.data.amount
                 })
         },
         // 支付弹窗展示
@@ -236,12 +223,33 @@ export default {
         hideErrDialog() {
             this.isShowErrDialog = false
         },
+        // 拿到银行组件传过来的银行ID
         onChangeBanks(bankObj) {
             this.bankId = bankObj.id
         },
+
         confirmBuy() {
-            this.isShowPayDialog = false
-            this.isShowCheckOrder = true
+            let buyVersionsArray = _.map(this.versions, (item) => {
+                return item.value
+            })
+            let reqParams = {
+                buyNumber: this.buyNum,
+                buyType: this.buyType.value,
+                period: this.period.value,
+                version: buyVersionsArray.join(','),
+                bankId: this.bankId
+            }
+            // 发送请求，拿到创建的订单号
+            this.$http.get('/api/createOrder', reqParams)
+                .then((res) => {                    
+                    this.orderId = res.data.orderId
+                    this.isShowCheckOrder = true
+                    this.isShowPayDialog = false
+                    console.log(this.orderId)
+                }, (err) => {
+                    this.isShowBuyDialog = false
+                    this.isShowErrDialog = true
+                })
         }
     },
     mounted() {
@@ -249,6 +257,7 @@ export default {
         this.buyType = this.buyTypes[0]
         this.versions = [this.versionList[0]]
         this.period = this.periodList[0]
+        this.bankId = 201
         this.getPrice()
     }
 }
