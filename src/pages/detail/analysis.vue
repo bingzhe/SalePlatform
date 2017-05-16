@@ -108,7 +108,7 @@
             支付失败
         </my-dialog>
         <!--支付成功弹窗 End-->
-        <check-order :is-show-check-dialog="isShowCheckOrder"></check-order>
+        <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order>
     </div>
 </template>
 
@@ -143,6 +143,7 @@ export default {
             isShowErrDialog: false,
             isShowCheckOrder: false,
             bankId: null,
+            orderId: null,
             buyTypes: [
                 {
                     label: '入门版',
@@ -223,6 +224,9 @@ export default {
         hideErrDialog() {
             this.isShowErrDialog = false
         },
+        hideCheckOrder() { 
+            this.isShowCheckOrder = false
+        },
         // 拿到银行组件传过来的银行ID
         onChangeBanks(bankObj) {
             this.bankId = bankObj.id
@@ -241,11 +245,10 @@ export default {
             }
             // 发送请求，拿到创建的订单号
             this.$http.get('/api/createOrder', reqParams)
-                .then((res) => {                    
+                .then((res) => {
                     this.orderId = res.data.orderId
                     this.isShowCheckOrder = true
                     this.isShowPayDialog = false
-                    console.log(this.orderId)
                 }, (err) => {
                     this.isShowBuyDialog = false
                     this.isShowErrDialog = true
