@@ -1,6 +1,5 @@
 {
-  "getNewsList": [
-    {
+  "getNewsList": [{
       "id": 1,
       "title": "新闻条目1新闻条目1新闻条目1新闻条目1",
       "url": "http://starcraft.com"
@@ -38,8 +37,7 @@
     "orderId": "6djk979"
   },
   "getOrderList": {
-    "list": [
-      {
+    "list": [{
         "orderId": "ddj123",
         "product": "数据统计",
         "version": "高级版",
@@ -68,4 +66,5 @@
       }
     ]
   }
+
 }

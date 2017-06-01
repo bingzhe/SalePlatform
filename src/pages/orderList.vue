@@ -16,15 +16,26 @@
             </div>
             <div class="order-list-option">
                 关键词：
+                <input type="text" v-model.lazy="query" class="order-query">
             </div>
         </div>
-    
+        <div class="order-list-table">
+            <table>
+                <tr>
+                    <th v-for="head in tableHeads" @click="changeOrderType(head)" :class="{active:head.active}">{{ head.label }}</th>
+                </tr>
+                <tr v-for="item in tableData">
+                    <td v-for="head in tableHeads">{{ item[head.key] }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
 import VSelection from '../components/base/selection'
 import VDatePicker from '../components/base/datepicker'
+import _ from 'lodash'
 export default {
     components: {
         VSelection,
@@ -53,22 +64,93 @@ export default {
                     label: '广告发布',
                     value: 3
                 }
-            ]
+            ],
+            tableHeads: [
+                {
+                    label: '订单号',
+                    key: 'orderId'
+                },
+                {
+                    label: '购买产品',
+                    key: 'product'
+                },
+                {
+                    label: '版本类型',
+                    key: 'version'
+                },
+                {
+                    label: '有效时间',
+                    key: 'period'
+                },
+                {
+                    label: '购买日期',
+                    key: 'date'
+                },
+                {
+                    label: '数量',
+                    key: 'buyNum'
+                },
+                {
+                    label: '总价',
+                    key: 'amount'
+                }
+            ],
+            currentOrder: 'asc',
+            tableData: []
+        }
+    },
+    watch: {
+        query() {
+            this.getList()
         }
     },
     methods: {
         productChange(obj) {
-            console.log(obj)
+
             this.productId = obj.value
-            // this.getList()
+            this.getList()
         },
         getStartDate(date) {
             this.startDate = date
-            // this.getList()
+            this.getList()
         },
         getEndDate(date) {
             this.endDate = date
-            // this.getList()
+            this.getList()
+        },
+        getList() {
+            let reqParams = {
+                query: this.query,
+                productId: this.productId,
+                startDate: this.startDate,
+                endDate: this.endDate
+            }
+            this.$http.get('api/getOrderList', reqParams)
+                .then((res) => {
+                    this.tableData = res.data.list
+                }, (err) => {
+                    console.log('请求错误')
+                })
+
+        },
+        changeOrderType(headItem) {
+            this.tableHeads.map((item) => {
+                item.active = false
+                return item
+            })
+
+            headItem.active = true
+
+            if (this.currentOrder === 'asc') {
+                this.currentOrder = 'desc'
+            }
+            else if (this.currentOrder === 'desc') {
+                this.currentOrder = 'asc'
+            }
+            this.tableData = _.orderBy(this.tableData, headItem.key, this.currentOrder)
+        },
+        mounted() {
+            this.getList()
         }
     }
 }
